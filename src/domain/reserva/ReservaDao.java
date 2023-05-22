@@ -2,6 +2,8 @@ package domain.reserva;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservaDao {
 
@@ -34,6 +36,68 @@ public class ReservaDao {
 
         }catch (SQLException ex){
             throw new RuntimeException(ex);
+        }
+    }
+
+    public List<Reserva> buscar() {
+        List<Reserva> reservas = new ArrayList<>();
+        try{
+            String sql = "SELECT id, data_entrada, data_saida, valor, forma_pagamento FROM reservas";
+            try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+                preparedStatement.execute();
+                transformaResultSetEmReserva(reservas, preparedStatement);
+            }
+            return reservas;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void transformaResultSetEmReserva(List<Reserva> reservas, PreparedStatement preparedStatement) throws SQLException {
+
+        try(ResultSet resultSet = preparedStatement.getResultSet()){
+            while (resultSet.next()){
+                Reserva reserva = new Reserva(resultSet.getInt(1), resultSet.getDate(2), resultSet.getDate(3),resultSet.getString(4),resultSet.getString(5));
+                reservas.add(reserva);
+            }
+        }
+    }
+
+    public List<Reserva> buscarPorId(String id) {
+        List<Reserva> reservas = new ArrayList<>();
+        try{
+            String sql = "SELECT id, data_entrada, data_saida, valor, forma_pagamento FROM reservas WHERE id = ?";
+
+            try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+                preparedStatement.setString(1, id);
+                preparedStatement.execute();
+
+                transformaResultSetEmReserva(reservas, preparedStatement);
+            }
+
+            return reservas;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void atualizar(Date dataEntrada, Date dataSaida, String valor, String formaPagamento, Integer id) {
+
+        try(PreparedStatement preparedStatement = connection
+                .prepareStatement("UPDATE reservas SET data_entrada = ?," +
+                        "data_saida = ?, valor = ?, forma_pagamento = ?," +
+                        "WHERE id = ?")){
+
+            preparedStatement.setDate(1, dataEntrada);
+            preparedStatement.setDate(2, dataSaida);
+            preparedStatement.setString(3, valor);
+            preparedStatement.setString(4, formaPagamento);
+            preparedStatement.setInt(5, id);
+
+            preparedStatement.execute();
+        }catch (SQLException sqlException){
+            throw new RuntimeException(sqlException);
+
         }
     }
 }

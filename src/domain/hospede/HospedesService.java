@@ -3,7 +3,7 @@ package domain.hospede;
 import factory.ConnectionFactory;
 
 import java.sql.Connection;
-import java.sql.SQLException;
+import java.util.List;
 
 public class HospedesService {
 
@@ -16,5 +16,13 @@ public class HospedesService {
 
     public void salvar (Hospedes hospedes) {
         this.hospedeDao.salvar(hospedes);
+    }
+
+    public List<Hospedes> buscar() {
+        return this.hospedeDao.listarHospedes();
+    }
+
+    public List<Hospedes> buscarPorId(String id) {
+        return this.hospedeDao.buscarPorId(id);
     }
 }
