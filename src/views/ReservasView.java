@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import java.awt.Color;
 import javax.swing.JTextField;
 
+import com.toedter.calendar.JCalendar;
 import com.toedter.calendar.JDateChooser;
 import domain.reserva.ReservaService;
 import domain.reserva.Reserva;
@@ -26,6 +27,7 @@ import java.awt.event.MouseMotionAdapter;
 import java.awt.Toolkit;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.util.Calendar;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
@@ -150,6 +152,7 @@ public class ReservasView extends JFrame {
         txtDataS.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent evt) {
                 //Ativa o evento, após o usuário selecionar as datas, o valor da reserva deve ser calculado
+                calcularValor(txtDataE, txtDataS);
             }
         });
         txtDataS.setDateFormatString("yyyy-MM-dd");
@@ -328,8 +331,8 @@ public class ReservasView extends JFrame {
         btnProximo.add(lblSeguinte);
     }
 
-    //Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"
 
+    //Código que permite movimentar a janela pela tela seguindo a posição de "x" e "y"
     private void headerMousePressed(java.awt.event.MouseEvent evt) {
         xMouse = evt.getX();
         yMouse = evt.getY();
@@ -356,5 +359,27 @@ public class ReservasView extends JFrame {
         registro.setVisible(true);
         dispose();
 	}
+
+    private void calcularValor(JDateChooser dataEntrada, JDateChooser dataSaida) {
+        if(dataEntrada.getDate() != null && dataSaida.getDate() != null){
+            Calendar inicio = dataEntrada.getCalendar();
+            Calendar fim = dataSaida.getCalendar();
+
+            //para contar a partir do dia seguinte.
+            int dias = -1;
+            int valorDiaria = 500;
+            int valor;
+
+            while (inicio.before(fim) || inicio.equals(fim)){
+                dias++;
+                inicio.add(Calendar.DATE, 1); // dias que será aumentados.
+            }
+            valor = dias * valorDiaria;
+            txtValor.setText("R$ " + valor);
+        }
+
+    }
+
+
 
 }
