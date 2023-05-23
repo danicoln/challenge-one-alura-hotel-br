@@ -84,31 +84,25 @@ Assim, o projeto deve conter os seguintes arquivos após as importações:
 
 ## 🚧 Projeto
 
-#### Ao clonar ou baixar o projeto base e ter o JCalendar instalado, você terá esta apresentação ao executar o projeto no Eclipse:
+#### Ao clonar ou baixar o projeto base e ter o JCalendar instalado, você terá esta apresentação ao executar o projeto:
 
 <p align="center" >
      <img width="500" heigth="500" src="https://user-images.githubusercontent.com/91544872/189409129-1379798d-7dd2-416f-8d37-3a7c661915b9.png">
+
 </p>
 
-### ⚠️ Baixei o projeto, mas os caracteres especiais não funcionam:
+### Tela de Login e Cadastro
+</br>
 
-Caso o seu projeto apresente erros como os da imagem, siga os passos abaixo:
+![Alt text](src/midia/hotel-login-cadastro.gif)
 
-<p align="center" >
-     <img width="600" heigth="600" src="https://user-images.githubusercontent.com/91544872/189411561-67ccbfb3-7e75-4fdd-bfa6-e5e7a940c46e.png">
-</p>
+### Tela de busca e update
 
-Vá até <em>Window</em> e clique em <em>Preferences</em>.
+![Alt text](src/midia/hotel-sistema-busca.gif)
 
-<p align="center" >
-     <img width="200" heigth="200" src="https://user-images.githubusercontent.com/101413385/173693126-8e2fec8b-91b1-4007-bbc5-010bb454f440.png">
-</p>
+### Excluindo dados
 
-Em seguida, clique em <em>General</em> e <em>Workspace</em>. Se o seu <em>Text File Enconding</em> não estiver com o <strong>Default (UTF-8)</strong>, clique em <em>Other</em>, e escolha a opção <strong>UTF-8</strong> e finalize clicando em <em>Apply and Close</em>.
-
-<p align="center" >
-     <img width="500" heigth="500" src="https://user-images.githubusercontent.com/101413385/173691963-1e3d966e-5162-4393-9232-d5d395d5440f.png">
-</p>
+![Alt text](src/midia/hotel-deletando-dados.gif)
 
 ## 📊 Banco de Dados
 
