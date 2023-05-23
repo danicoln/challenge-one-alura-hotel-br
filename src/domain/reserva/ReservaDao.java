@@ -85,7 +85,7 @@ public class ReservaDao {
 
         try(PreparedStatement preparedStatement = connection
                 .prepareStatement("UPDATE reservas SET data_entrada = ?," +
-                        "data_saida = ?, valor = ?, forma_pagamento = ?," +
+                        "data_saida = ?, valor = ?, forma_pagamento = ?" +
                         "WHERE id = ?")){
 
             preparedStatement.setDate(1, dataEntrada);
@@ -98,6 +98,17 @@ public class ReservaDao {
         }catch (SQLException sqlException){
             throw new RuntimeException(sqlException);
 
+        }
+    }
+
+    public void deletar(Integer id) {
+        try(PreparedStatement pstm = connection.prepareStatement(
+                "DELETE FROM reservas WHERE id = ?"
+        )) {
+            pstm.setInt(1, id);
+            pstm.execute();
+        }catch (SQLException ex){
+            throw  new RuntimeException(ex);
         }
     }
 }

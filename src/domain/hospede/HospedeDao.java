@@ -2,6 +2,7 @@ package domain.hospede;
 
 import domain.reserva.Reserva;
 
+import javax.xml.crypto.Data;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +81,54 @@ public class HospedeDao {
                 hospedes.add(hospede);
 //                this.connection.close();
             }
+        }
+    }
+
+    public void atualizar(Integer id, String nome, String sobreNome, Date dataNasc, String nacionalidade, String telefone, Integer reserva_id) {
+
+        try(PreparedStatement preparedStatement = connection.prepareStatement(
+                "UPDATE hospedes SET nome = ?," +
+                        "sobrenome = ?, data_nasc = ?, " +
+                        "nacionalidade = ?, telefone = ?, reserva_id = ? " +
+                        "WHERE id = ?"
+        )){
+            preparedStatement.setString(1, nome);
+            preparedStatement.setString(2, sobreNome);
+            preparedStatement.setDate(3, dataNasc);
+            preparedStatement.setString(4, nacionalidade);
+            preparedStatement.setString(5, telefone);
+            preparedStatement.setInt(6, reserva_id);
+            preparedStatement.setInt(7, id);
+            preparedStatement.execute();
+        }catch (SQLException ex){
+            throw  new RuntimeException(ex);
+        }
+    }
+
+    public void deletar(Integer id) {
+        try(PreparedStatement pstm = connection.prepareStatement(
+                "DELETE FROM hospedes WHERE id = ?"
+        )){
+           pstm.setInt(1, id);
+           pstm.execute();
+        }catch (SQLException ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public List<Hospedes> buscarHospedePorNome(String nome) {
+        List<Hospedes> hospedes = new ArrayList<>();
+        try{
+            String sql = "SELECT id, nome, sobrenome, data_nasc, nacionalidade, telefone, reserva_id FROM hospedes WHERE nome = ?";
+            try(PreparedStatement preparedStatement = connection.prepareStatement(sql)){
+                preparedStatement.setString(1, nome);
+                preparedStatement.execute();
+
+                transformaResultSetEmHospedes(hospedes, preparedStatement);
+            }
+            return hospedes;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }

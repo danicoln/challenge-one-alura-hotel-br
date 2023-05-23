@@ -32,4 +32,8 @@ public class ReservaService {
     public void atualizar(Date dataEntrada, Date dataSaida, String valor, String formaPagamento, Integer id) {
         this.reservaDao.atualizar(dataEntrada, dataSaida, valor, formaPagamento, id);
     }
+
+    public void deletar(Integer id) {
+        this.reservaDao.deletar(id);
+    }
 }

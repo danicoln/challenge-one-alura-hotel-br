@@ -2,7 +2,9 @@ package domain.hospede;
 
 import factory.ConnectionFactory;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
+import java.sql.Date;
 import java.util.List;
 
 public class HospedesService {
@@ -24,5 +26,17 @@ public class HospedesService {
 
     public List<Hospedes> buscarPorId(String id) {
         return this.hospedeDao.buscarPorId(id);
+    }
+
+    public void atualizar(Integer id, String nome, String sobreNome, Date dataNasc, String nacionalidade, String telefone, Integer reserva_id) {
+        this.hospedeDao.atualizar(id, nome, sobreNome, dataNasc, nacionalidade, telefone, reserva_id);
+    }
+
+    public void deletar(Integer id) {
+        this.hospedeDao.deletar(id);
+    }
+
+    public List<Hospedes> buscarHospedePorNome(String nome) {
+        return this.hospedeDao.buscarHospedePorNome(nome);
     }
 }

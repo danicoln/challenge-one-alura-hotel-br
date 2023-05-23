@@ -1,0 +1,75 @@
+package domain.reserva;
+
+import com.toedter.calendar.JDateChooser;
+
+import javax.swing.*;
+import java.sql.Date;
+import java.util.Calendar;
+
+public class ReservaCalculaValor {
+
+    private JDateChooser dataEntrada;
+    private JDateChooser dataSaida;
+    private Integer valorDiaria = 500;
+
+//    public ReservaCalculaValor(JDateChooser dataEntrada, JDateChooser dataSaida) {
+//        this.dataEntrada = dataEntrada;
+//        this.dataSaida = dataSaida;
+//    }
+
+    public void calcularValor(JDateChooser dataEntrada, JDateChooser dataSaida, JTextField txtValor) {
+        int valor = 0;
+        if (dataEntrada.getDate() != null && dataSaida.getDate() != null) {
+            Calendar inicio = dataEntrada.getCalendar();
+            Calendar fim = dataSaida.getCalendar();
+
+            //para contar a partir do dia seguinte.
+            int dias = -1;
+
+            while (inicio.before(fim) || inicio.equals(fim)) {
+                dias++;
+                inicio.add(Calendar.DATE, 1); // dias que será aumentados.
+            }
+            valor = dias * valorDiaria;
+            txtValor.setText("R$ " + valor);
+        }
+    }
+
+// Fiz este método para tentar atualizar o valor automaticamente, mas está dando erro MysqlDataTruncation
+//    public String converteDados(Date dataEntrada, Date dataSaida, String valor) {
+//        JTextField novoValor = new JTextField(valor);
+//        JDateChooser entrada = new JDateChooser(dataEntrada);
+//        JDateChooser saida = new JDateChooser(dataSaida);
+//
+//        this.calcularValor(entrada, saida, novoValor);
+//
+//        String valorString = String.valueOf(novoValor);
+//        System.out.println(valorString);
+//        return valorString;
+//
+//    }
+
+    public JDateChooser getDataEntrada() {
+        return dataEntrada;
+    }
+
+    public void setDataEntrada(JDateChooser dataEntrada) {
+        this.dataEntrada = dataEntrada;
+    }
+
+    public JDateChooser getDataSaida() {
+        return dataSaida;
+    }
+
+    public void setDataSaida(JDateChooser dataSaida) {
+        this.dataSaida = dataSaida;
+    }
+
+    public Integer getValorDiaria() {
+        return valorDiaria;
+    }
+
+    public void setValorDiaria(Integer valorDiaria) {
+        this.valorDiaria = valorDiaria;
+    }
+}
